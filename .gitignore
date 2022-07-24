@@ -1,7 +1,7 @@
 /.gradle/
 /.idea/
 /build/
-/gradle/
+/gradle/wrapper/gradle-wrapper.jar
 /gradlew
 /gradlew.bat
 /kotlin-js-store/yarn.lock
