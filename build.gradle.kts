@@ -1,6 +1,7 @@
 plugins {
 	kotlin("multiplatform") version "1.6.10"
 	kotlin("plugin.serialization") version "1.6.10"
+	`maven-publish`
 }
 
 group = "mikhaylutsyury"
@@ -56,5 +57,16 @@ kotlin {
 			}
 		}
 		val jsTest by getting
+	}
+	val publicationsFromMainHost = listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+	publishing {
+		publications {
+			matching { it.name in publicationsFromMainHost }.all {
+				val targetPublication = this@all
+				tasks.withType<AbstractPublishToMaven>()
+					.matching { it.publication == targetPublication }
+					.configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+			}
+		}
 	}
 }
