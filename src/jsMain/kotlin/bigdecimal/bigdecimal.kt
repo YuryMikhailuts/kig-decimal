@@ -29,17 +29,14 @@ external class BigInteger {
 	fun compareTo(other: BigInteger): Int
 	fun divide(other: BigInteger): BigInteger
 	fun divideAndRemainder(other: BigInteger): Array<BigInteger>
-	fun doubleValue(other: BigInteger): Double
+	fun doubleValue(): Double
 	fun flipBit(n: Int): BigInteger
 	fun floatValue(): Float
 	override fun hashCode(): Int
 	fun intValue(): Int
-	fun longValue(): Long
 	fun max(other: BigInteger): BigInteger
 	fun min(other: BigInteger): BigInteger
 	fun mod(other: BigInteger): BigInteger
-	fun modInverse(other: BigInteger): BigInteger
-	fun modPow(exponent: BigInteger, m: BigInteger): BigInteger
 	fun multiply(other: BigInteger): BigInteger
 	fun negate(): BigInteger
 	fun nextProbablePrime(): BigInteger

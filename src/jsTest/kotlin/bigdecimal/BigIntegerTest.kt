@@ -112,6 +112,7 @@ class BigIntegerTest {
 	fun divideTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
+				if (r == 0) continue
 				val expect = (l / r).asBigInteger()
 				val actual = l.asBigInteger().divide(r.asBigInteger())
 				assertEq(expect, actual)
@@ -121,43 +122,54 @@ class BigIntegerTest {
 
 	@Test
 	fun divideAndRemainderTest() {
-		for (r in -100..100) {
+		for (l in -100..100) {
+			for (r in -100..100) {
+				if (r == 0) continue
+				val expectDivide = (l / r).asBigInteger()
+				val expectRem = (l.rem(r)).asBigInteger()
+				val (actualDivide, actualRem) = l.asBigInteger().divideAndRemainder(r.asBigInteger())
+				assertEq(expectDivide, actualDivide)
+				assertEq(expectRem, actualRem)
+			}
 		}
 	}
 
 	@Test
 	fun doubleValueTest() {
 		for (r in -100..100) {
+			assertEquals(r.toDouble(), r.asBigInteger().doubleValue())
 		}
 	}
 
 	@Test
 	fun flipBitTest() {
 		for (r in -100..100) {
+			for (bit in 0..30) {
+				val expect = (r xor (1 shl bit)).asBigInteger()
+				val actual = r.asBigInteger().flipBit(bit)
+				assertEq(expect, actual)
+			}
 		}
 	}
 
 	@Test
 	fun floatValueTest() {
 		for (r in -100..100) {
+			assertEquals(r.toFloat(), r.asBigInteger().floatValue())
 		}
 	}
 
 	@Test
 	fun hashCodeTest() {
 		for (r in -100..100) {
+			assertEquals(r.hashCode(), r.asBigInteger().hashCode())
 		}
 	}
 
 	@Test
 	fun intValueTest() {
 		for (r in -100..100) {
-		}
-	}
-
-	@Test
-	fun longValueTest() {
-		for (r in -100..100) {
+			assertEquals(r, r.asBigInteger().intValue())
 		}
 	}
 
@@ -185,19 +197,12 @@ class BigIntegerTest {
 
 	@Test
 	fun modTest() {
-		for (r in -100..100) {
-		}
-	}
-
-	@Test
-	fun modInverseTest() {
-		for (r in -100..100) {
-		}
-	}
-
-	@Test
-	fun modPowTest() {
-		for (r in -100..100) {
+		for (l in -100..100) {
+			for (r in 1..100) {
+				val expect = (l.mod(r)).asBigInteger()
+				val actual = l.asBigInteger().mod(r.asBigInteger())
+				assertEq(expect, actual)
+			}
 		}
 	}
 
@@ -215,18 +220,22 @@ class BigIntegerTest {
 	@Test
 	fun negateTest() {
 		for (r in -100..100) {
+			assertEq((-r).asBigInteger(), r.asBigInteger().negate())
 		}
 	}
 
 	@Test
 	fun nextProbablePrimeTest() {
-		for (r in -100..100) {
+		val primes = listOf(1, 2, 3, 5, 7, 11, 13)
+		for ((r, l) in primes.windowed(2)) {
+			assertEq(l.asBigInteger(), r.asBigInteger().nextProbablePrime())
 		}
 	}
 
 	@Test
 	fun notTest() {
 		for (r in -100..100) {
+			assertEq(r.inv().asBigInteger(), r.asBigInteger().not())
 		}
 	}
 
