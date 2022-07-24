@@ -21,7 +21,7 @@ class BigIntegerTest {
 	@Test
 	fun constructorTest() {
 		for (it in -1000..1000) {
-			val bigInteger = BigInteger("$it")
+			val bigInteger = BigInteger(it)
 			println(bigInteger)
 		}
 	}
@@ -38,8 +38,8 @@ class BigIntegerTest {
 	@Test
 	fun absTest() {
 		for (it in -1000..1000) {
-			val expect = abs(it).asBigInteger()
-			val actual = it.asBigInteger().abs()
+			val expect = abs(it).toBigInteger()
+			val actual = it.toBigInteger().abs()
 			assertEq(expect, actual)
 		}
 	}
@@ -48,8 +48,8 @@ class BigIntegerTest {
 	fun addTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l + r).asBigInteger()
-				val actual = l.asBigInteger().add(r.asBigInteger())
+				val expect = (l + r).toBigInteger()
+				val actual = l.toBigInteger().add(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -59,8 +59,8 @@ class BigIntegerTest {
 	fun andTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l and r).asBigInteger()
-				val actual = l.asBigInteger().and(r.asBigInteger())
+				val expect = (l and r).toBigInteger()
+				val actual = l.toBigInteger().and(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -70,8 +70,8 @@ class BigIntegerTest {
 	fun andNotTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l and r.inv()).asBigInteger()
-				val actual = l.asBigInteger().andNot(r.asBigInteger())
+				val expect = (l and r.inv()).toBigInteger()
+				val actual = l.toBigInteger().andNot(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -83,7 +83,7 @@ class BigIntegerTest {
 		for (len in 0..30) {
 			val maskOr = 1 shl len
 			maskAnd = maskAnd or maskOr
-			val i = ((0xFFFFFFFF.toInt() or maskOr) and maskAnd).asBigInteger()
+			val i = ((0xFFFFFFFF.toInt() or maskOr) and maskAnd).toBigInteger()
 			assertEquals(len + 1, i.bitLength())
 		}
 	}
@@ -94,7 +94,7 @@ class BigIntegerTest {
 		for (len in 0..30) {
 			val maskOr = 1 shl len
 			maskAnd = maskAnd or maskOr
-			val i = ((Random.nextInt() or maskOr) and maskAnd).asBigInteger()
+			val i = ((Random.nextInt() or maskOr) and maskAnd).toBigInteger()
 			assertEquals(len + 1, i.bitLength())
 		}
 	}
@@ -103,7 +103,7 @@ class BigIntegerTest {
 	fun compareToTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				assertTrue { l.compareTo(r) == l.asBigInteger().compareTo(r.asBigInteger()) }
+				assertTrue { l.compareTo(r) == l.toBigInteger().compareTo(r.toBigInteger()) }
 			}
 		}
 	}
@@ -113,8 +113,8 @@ class BigIntegerTest {
 		for (l in -100..100) {
 			for (r in -100..100) {
 				if (r == 0) continue
-				val expect = (l / r).asBigInteger()
-				val actual = l.asBigInteger().divide(r.asBigInteger())
+				val expect = (l / r).toBigInteger()
+				val actual = l.toBigInteger().divide(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -125,9 +125,9 @@ class BigIntegerTest {
 		for (l in -100..100) {
 			for (r in -100..100) {
 				if (r == 0) continue
-				val expectDivide = (l / r).asBigInteger()
-				val expectRem = (l.rem(r)).asBigInteger()
-				val (actualDivide, actualRem) = l.asBigInteger().divideAndRemainder(r.asBigInteger())
+				val expectDivide = (l / r).toBigInteger()
+				val expectRem = (l.rem(r)).toBigInteger()
+				val (actualDivide, actualRem) = l.toBigInteger().divideAndRemainder(r.toBigInteger())
 				assertEq(expectDivide, actualDivide)
 				assertEq(expectRem, actualRem)
 			}
@@ -137,7 +137,7 @@ class BigIntegerTest {
 	@Test
 	fun doubleValueTest() {
 		for (r in -100..100) {
-			assertEquals(r.toDouble(), r.asBigInteger().doubleValue())
+			assertEquals(r.toDouble(), r.toBigInteger().doubleValue())
 		}
 	}
 
@@ -145,8 +145,8 @@ class BigIntegerTest {
 	fun flipBitTest() {
 		for (r in -100..100) {
 			for (bit in 0..30) {
-				val expect = (r xor (1 shl bit)).asBigInteger()
-				val actual = r.asBigInteger().flipBit(bit)
+				val expect = (r xor (1 shl bit)).toBigInteger()
+				val actual = r.toBigInteger().flipBit(bit)
 				assertEq(expect, actual)
 			}
 		}
@@ -155,21 +155,21 @@ class BigIntegerTest {
 	@Test
 	fun floatValueTest() {
 		for (r in -100..100) {
-			assertEquals(r.toFloat(), r.asBigInteger().floatValue())
+			assertEquals(r.toFloat(), r.toBigInteger().floatValue())
 		}
 	}
 
 	@Test
 	fun hashCodeTest() {
 		for (r in -100..100) {
-			assertEquals(r.hashCode(), r.asBigInteger().hashCode())
+			assertEquals(r.hashCode(), r.toBigInteger().hashCode())
 		}
 	}
 
 	@Test
 	fun intValueTest() {
 		for (r in -100..100) {
-			assertEquals(r, r.asBigInteger().intValue())
+			assertEquals(r, r.toBigInteger().intValue())
 		}
 	}
 
@@ -177,8 +177,8 @@ class BigIntegerTest {
 	fun maxTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = max(l, r).asBigInteger()
-				val actual = l.asBigInteger().max(r.asBigInteger())
+				val expect = max(l, r).toBigInteger()
+				val actual = l.toBigInteger().max(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -188,8 +188,8 @@ class BigIntegerTest {
 	fun minTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = min(l, r).asBigInteger()
-				val actual = l.asBigInteger().min(r.asBigInteger())
+				val expect = min(l, r).toBigInteger()
+				val actual = l.toBigInteger().min(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -199,8 +199,8 @@ class BigIntegerTest {
 	fun modTest() {
 		for (l in -100..100) {
 			for (r in 1..100) {
-				val expect = (l.mod(r)).asBigInteger()
-				val actual = l.asBigInteger().mod(r.asBigInteger())
+				val expect = (l.mod(r)).toBigInteger()
+				val actual = l.toBigInteger().mod(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -210,8 +210,8 @@ class BigIntegerTest {
 	fun multiplyTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l * r).asBigInteger()
-				val actual = l.asBigInteger().multiply(r.asBigInteger())
+				val expect = (l * r).toBigInteger()
+				val actual = l.toBigInteger().multiply(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -220,7 +220,7 @@ class BigIntegerTest {
 	@Test
 	fun negateTest() {
 		for (r in -100..100) {
-			assertEq((-r).asBigInteger(), r.asBigInteger().negate())
+			assertEq((-r).toBigInteger(), r.toBigInteger().negate())
 		}
 	}
 
@@ -228,14 +228,14 @@ class BigIntegerTest {
 	fun nextProbablePrimeTest() {
 		val primes = listOf(1, 2, 3, 5, 7, 11, 13)
 		for ((r, l) in primes.windowed(2)) {
-			assertEq(l.asBigInteger(), r.asBigInteger().nextProbablePrime())
+			assertEq(l.toBigInteger(), r.toBigInteger().nextProbablePrime())
 		}
 	}
 
 	@Test
 	fun notTest() {
 		for (r in -100..100) {
-			assertEq(r.inv().asBigInteger(), r.asBigInteger().not())
+			assertEq(r.inv().toBigInteger(), r.toBigInteger().not())
 		}
 	}
 
@@ -243,8 +243,8 @@ class BigIntegerTest {
 	fun orTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l or r).asBigInteger()
-				val actual = l.asBigInteger().or(r.asBigInteger())
+				val expect = (l or r).toBigInteger()
+				val actual = l.toBigInteger().or(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -255,8 +255,8 @@ class BigIntegerTest {
 		for (l in -10..10) {
 			for (r in 0..10) {
 				println("$l pow $r")
-				val expect = (listOf(1L) + List(r) { l.toLong() }).reduce { acc, i -> acc * i }.asBigInteger()
-				val actual = l.asBigInteger().pow(r)
+				val expect = (listOf(1L) + List(r) { l.toLong() }).reduce { acc, i -> acc * i }.toBigInteger()
+				val actual = l.toBigInteger().pow(r)
 				assertEq(expect, actual)
 			}
 		}
@@ -267,8 +267,8 @@ class BigIntegerTest {
 		for (l in -100..100) {
 			for (r in -100..100) {
 				if (r == 0) continue
-				val expect = (l.rem(r)).asBigInteger()
-				val actual = l.asBigInteger().remainder(r.asBigInteger())
+				val expect = (l.rem(r)).toBigInteger()
+				val actual = l.toBigInteger().remainder(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -278,8 +278,8 @@ class BigIntegerTest {
 	fun shiftLeftTest() {
 		for (l in -100..100) {
 			for (r in 0..10) {
-				val expect = (l.shl(r)).asBigInteger()
-				val actual = l.asBigInteger().shiftLeft(r)
+				val expect = (l.shl(r)).toBigInteger()
+				val actual = l.toBigInteger().shiftLeft(r)
 				assertEq(expect, actual)
 			}
 		}
@@ -289,8 +289,8 @@ class BigIntegerTest {
 	fun shiftRightTest() {
 		for (l in -100..100) {
 			for (r in 0..10) {
-				val expect = (l.shr(r)).asBigInteger()
-				val actual = l.asBigInteger().shiftRight(r)
+				val expect = (l.shr(r)).toBigInteger()
+				val actual = l.toBigInteger().shiftRight(r)
 				assertEq(expect, actual)
 			}
 		}
@@ -299,7 +299,7 @@ class BigIntegerTest {
 	@Test
 	fun signumTest() {
 		for (r in -100..100) {
-			assertEquals(r.sign, r.asBigInteger().signum())
+			assertEquals(r.sign, r.toBigInteger().signum())
 		}
 	}
 
@@ -307,8 +307,8 @@ class BigIntegerTest {
 	fun subtractTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l - r).asBigInteger()
-				val actual = l.asBigInteger().subtract(r.asBigInteger())
+				val expect = (l - r).toBigInteger()
+				val actual = l.toBigInteger().subtract(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}
@@ -319,7 +319,7 @@ class BigIntegerTest {
 		for (l in -100..100) {
 			for (r in 0..10) {
 				val expect = l and (1 shl r) != 0
-				val actual = l.asBigInteger().testBit(r)
+				val actual = l.toBigInteger().testBit(r)
 				assertEquals(expect, actual)
 			}
 		}
@@ -329,8 +329,8 @@ class BigIntegerTest {
 	fun xorTest() {
 		for (l in -100..100) {
 			for (r in -100..100) {
-				val expect = (l xor r).asBigInteger()
-				val actual = l.asBigInteger().xor(r.asBigInteger())
+				val expect = (l xor r).toBigInteger()
+				val actual = l.toBigInteger().xor(r.toBigInteger())
 				assertEq(expect, actual)
 			}
 		}

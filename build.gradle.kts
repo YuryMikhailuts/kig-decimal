@@ -22,7 +22,9 @@ kotlin {
 	js(BOTH) {
 		browser {
 			testTask {
-				useMocha()
+				useMocha {
+					timeout = "30000"
+				}
 			}
 			commonWebpackConfig {
 				cssSupport.enabled = true

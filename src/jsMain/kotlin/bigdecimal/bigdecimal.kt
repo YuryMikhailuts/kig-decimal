@@ -1,20 +1,51 @@
 package bigdecimal
 
 external interface BigDecimalModule {
-	fun BigInteger(text: String, notation: Int): BigInteger
+	fun BigInteger(text: String, radix: Int): BigInteger
+	fun BigDecimal(text: String): BigDecimal
+	fun BigDecimal(value: Int): BigDecimal
+	fun BigDecimal(value: Float): BigDecimal
+	fun BigDecimal(value: Double): BigDecimal
+
+	val MathContext: MathContextStatic
 }
 
+val DECIMAL128 get() = bigdecimal.MathContext.DECIMAL128()
+val DECIMAL64 get() = bigdecimal.MathContext.DECIMAL64()
+val DECIMAL32 get() = bigdecimal.MathContext.DECIMAL32()
+val UNLIMITED get() = bigdecimal.MathContext.UNLIMITED()
+
+@Suppress("SpellCheckingInspection")
 val bigdecimal: BigDecimalModule by lazy { js("require(\"bigdecimal\")").unsafeCast<BigDecimalModule>() }
 
 fun BigInteger(text: String, notation: Int = 10) = bigdecimal.BigInteger(text, notation)
 
 fun BigInteger(value: Int) = BigInteger("$value")
 
-fun Int.asBigInteger() = BigInteger(this)
+fun Int.toBigInteger() = BigInteger(this)
 
 fun BigInteger(value: Long) = BigInteger("$value")
 
-fun Long.asBigInteger() = BigInteger(this)
+fun Long.toBigInteger() = BigInteger(this)
+
+fun BigDecimal(text: String) = bigdecimal.BigDecimal(text)
+
+fun BigDecimal(value: Int) = bigdecimal.BigDecimal(value)
+
+fun Int.toBigDecimal() = BigDecimal(this)
+
+fun BigDecimal(value: Long) = BigDecimal("$value")
+
+fun Long.toBigDecimal() = BigDecimal(this)
+
+fun BigDecimal(value: Float) = bigdecimal.BigDecimal(value)
+
+fun Float.toBigDecimal() = BigDecimal(this)
+
+fun BigDecimal(value: Double) = bigdecimal.BigDecimal(value)
+
+fun Double.toBigDecimal() = BigDecimal(this)
+
 
 @JsModule("bigdecimal")
 @JsNonModule
@@ -57,6 +88,62 @@ infix fun BigInteger.eq(other: BigInteger): Boolean = compareTo(other) == 0
 @JsModule("bigdecimal")
 @JsNonModule
 @JsName("BigDecimal")
-external class BigDecimal(text: String) {
+external class BigDecimal {
+	fun abs(): BigDecimal
+	fun compareTo(other: BigDecimal): Int
+	fun add(augend: BigDecimal): BigDecimal
+	fun subtract(subtrahend: BigDecimal): BigDecimal
+	fun multiply(multiplicand: BigDecimal): BigDecimal
+	fun divide(divisor: BigDecimal): BigDecimal
+	fun divide(other: BigDecimal, context: MathContext): BigDecimal
+	fun divideToIntegralValue(divisor: BigDecimal): BigDecimal
+	fun remainder(divisor: BigDecimal): BigDecimal
+	fun divideAndRemainder(divisor: BigDecimal): Array<BigDecimal>
+	fun pow(n: Int): BigDecimal
+	fun negate(): BigDecimal
+	fun plus(): BigDecimal
+	fun signum(): Int
+	fun scale(): Int
+	fun precision(): Int
+	fun unscaledValue(): BigInteger
+	fun setScale(newScale: Int): BigDecimal
+	fun movePointLeft(n: Int): BigDecimal
+	fun movePointRight(n: Int): BigDecimal
+	fun scaleByPowerOfTen(n: Int): BigDecimal
+	fun stripTrailingZeros(): BigDecimal
+	fun min(other: BigDecimal): BigDecimal
+	fun max(other: BigDecimal): BigDecimal
+	override fun hashCode(): Int
+	fun toEngineeringString(): String
+	fun toPlainString(): String
+	fun toBigInteger(): BigInteger
+	fun toBigIntegerExact(): BigInteger
+	fun longValueExact(): Long
+	fun intValue(): Int
+	fun intValueExact(): Int
+	fun shortValueExact(): Short
+	fun byteValueExact(): Byte
+	fun floatValue(): Float
+	fun doubleValue(): Double
+	fun ulp(): BigDecimal
+	fun longDigitLength(x: Long): Int
+	fun scaledTenPow(n: Int, sign: Int, scale: Int): BigDecimal
+}
 
+infix fun BigDecimal.eq(other: BigDecimal): Boolean = compareTo(other) == 0
+
+
+@JsModule("bigdecimal")
+@JsNonModule
+@JsName("MathContext")
+external interface MathContext {
+	val precision: Int
+	fun getRoundingMode(): dynamic
+}
+
+external interface MathContextStatic {
+	val DECIMAL128: () -> MathContext
+	val DECIMAL64: () -> MathContext
+	val DECIMAL32: () -> MathContext
+	val UNLIMITED: () -> MathContext
 }
