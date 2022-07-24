@@ -1,5 +1,15 @@
 package mikhaylutsyury.kigdecimal
 
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import mikhaylutsyury.kigdecimal.ext.BigInteger
+
 expect class BigInteger {
 	fun abs(): BigInteger
 	fun add(other: BigInteger): BigInteger
@@ -39,3 +49,16 @@ expect fun makeBigInteger(value: Int): BigInteger
 expect fun makeBigInteger(value: Long): BigInteger
 fun Int.toBigInteger() = makeBigInteger(this)
 fun Long.toBigInteger() = makeBigInteger(this)
+
+
+@Suppress("OPT_IN_IS_NOT_ENABLED")
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(BigInteger::class)
+object BigIntegerSerializer : KSerializer<BigInteger> {
+	override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigInteger", PrimitiveKind.STRING)
+
+	override fun deserialize(decoder: Decoder): BigInteger = BigInteger(decoder.decodeString(), 10)
+
+	override fun serialize(encoder: Encoder, value: BigInteger) = encoder.encodeString("$value")
+
+}
