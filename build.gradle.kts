@@ -62,13 +62,13 @@ kotlin {
 	publishing {
 		publications {
 			all {
-				this as org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
-				val targetPublication = this@all
-				tasks.withType<AbstractPublishToMaven>()
-					.matching { it.publication == targetPublication }
-					.configureEach { onlyIf { findProperty("isMainHost") == "true" } }
-				groupId = "com.github.YuryMikhailuts"
-				artifactId = "kig-decimal"
+//				this as org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
+//				val targetPublication = this@all
+//				tasks.withType<AbstractPublishToMaven>()
+//					.matching { it.publication == targetPublication }
+//					.configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+//				groupId = "com.github.YuryMikhailuts"
+//				artifactId = "kig-decimal"
 			}
 		}
 	}
