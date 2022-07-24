@@ -21,6 +21,9 @@ kotlin {
 	}
 	js(BOTH) {
 		browser {
+			testTask {
+				useMocha()
+			}
 			commonWebpackConfig {
 				cssSupport.enabled = true
 			}
