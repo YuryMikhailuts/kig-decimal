@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "mikhaylutsyury"
-version = "1.1-SNAPSHOT"
+version = "1.2-SNAPSHOT"
 
 repositories {
 	mavenCentral()
@@ -61,11 +61,18 @@ kotlin {
 	val publicationsFromMainHost = listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
 	publishing {
 		publications {
-			matching { it.name in publicationsFromMainHost }.all {
+			all {
+				this as MavenPublication
 				val targetPublication = this@all
 				tasks.withType<AbstractPublishToMaven>()
 					.matching { it.publication == targetPublication }
 					.configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+				groupId = "com.github.YuryMikhailuts"
+				if (name == "kotlinMultiplatform") {
+					artifactId = "kig-decimal"
+				} else {
+					artifactId = "kig-decimal-$name"
+				}
 			}
 		}
 	}
