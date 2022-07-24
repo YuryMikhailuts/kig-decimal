@@ -136,10 +136,7 @@ infix fun BigDecimal.eq(other: BigDecimal): Boolean = compareTo(other) == 0
 @JsModule("bigdecimal")
 @JsNonModule
 @JsName("MathContext")
-external interface MathContext {
-	val precision: Int
-	fun getRoundingMode(): dynamic
-}
+external class MathContext
 
 external interface MathContextStatic {
 	val DECIMAL128: () -> MathContext

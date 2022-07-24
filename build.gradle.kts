@@ -1,5 +1,5 @@
 plugins {
-	kotlin("multiplatform") version "1.7.10"
+	kotlin("multiplatform") version "1.6.10"
 }
 
 group = "mikhaylutsyury"
@@ -9,10 +9,15 @@ repositories {
 	mavenCentral()
 }
 
+java {
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+}
+
 kotlin {
 	jvm {
 		compilations.all {
-			kotlinOptions.jvmTarget = "1.8"
+			kotlinOptions.jvmTarget = "11"
 		}
 		withJava()
 		testRuns["test"].executionTask.configure {
