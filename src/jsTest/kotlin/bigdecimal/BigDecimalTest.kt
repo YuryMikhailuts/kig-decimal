@@ -1,5 +1,9 @@
 package bigdecimal
 
+import mikhaylutsyury.kigdecimal.HALF_UP
+import mikhaylutsyury.kigdecimal.RoundingMode
+import mikhaylutsyury.kigdecimal.RoundingModes
+import mikhaylutsyury.kigdecimal.toBigDecimal
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -248,6 +252,14 @@ class BigDecimalTest {
 		for (l in 1..100) {
 			// Бог знает, как это тестировать.
 			val actual = 2.toBigDecimal().setScale(l)
+			println(actual)
+		}
+	}
+
+	@Test
+	fun setScaleRoundingModeTest() {
+		for (l in 1..100) {
+			val actual = "2.555555555555555555555555".toBigDecimal().setScale(l, RoundingModes.HALF_UP)
 			println(actual)
 		}
 	}
