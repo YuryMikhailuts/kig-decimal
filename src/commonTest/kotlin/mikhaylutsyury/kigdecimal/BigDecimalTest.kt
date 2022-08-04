@@ -274,4 +274,15 @@ class BigDecimalTest {
 		}
 	}
 
+	@Test
+	fun toBigIntegerExactTest() {
+		for (r in 1..1000) {
+			val l = r * 0.1 + 100000
+			println("-----------------------")
+			println("toBigInteger: '${l.toBigDecimal().toBigInteger()}'")
+			println("toPlainString: '${l.toBigDecimal().toPlainString()}'")
+			println("toEngineeringString: '${l.toBigDecimal().toEngineeringString()}'")
+		}
+	}
+
 }
