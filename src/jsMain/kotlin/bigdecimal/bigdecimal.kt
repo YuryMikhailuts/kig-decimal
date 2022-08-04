@@ -35,6 +35,7 @@ fun BigDecimal(value: Int) = bigdecimal.BigDecimal(value)
 fun Int.toBigDecimal() = BigDecimal(this)
 
 fun BigDecimal(value: Long) = BigDecimal("$value")
+fun BigDecimal(value: BigInteger) = BigDecimal("$value")
 
 fun Long.toBigDecimal() = BigDecimal(this)
 

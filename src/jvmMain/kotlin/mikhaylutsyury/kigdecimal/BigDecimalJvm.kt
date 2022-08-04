@@ -7,3 +7,4 @@ actual fun makeBigDecimal(value: Int): BigDecimal = BigDecimal.valueOf(value.toL
 actual fun makeBigDecimal(value: Long): BigDecimal = BigDecimal.valueOf(value)
 actual fun makeBigDecimal(value: Float): BigDecimal = BigDecimal.valueOf(value.toDouble())
 actual fun makeBigDecimal(value: Double): BigDecimal = BigDecimal.valueOf(value)
+actual fun makeBigDecimal(value: BigInteger): BigDecimal = BigDecimal(value)
