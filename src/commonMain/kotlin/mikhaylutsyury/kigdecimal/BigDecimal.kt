@@ -21,6 +21,7 @@ expect class BigDecimal {
 	fun precision(): Int
 	fun unscaledValue(): BigInteger
 	fun setScale(newScale: Int): BigDecimal
+	fun setScale(newScale: Int, roundingMode: RoundingMode): BigDecimal
 	fun movePointLeft(n: Int): BigDecimal
 	fun movePointRight(n: Int): BigDecimal
 	fun scaleByPowerOfTen(n: Int): BigDecimal
@@ -55,5 +56,5 @@ fun Long.toBigDecimal() = BigDecimal(this)
 fun Float.toBigDecimal() = BigDecimal(this)
 fun Double.toBigDecimal() = BigDecimal(this)
 fun BigInteger.toBigDecimal() = BigDecimal(this)
-
+fun String.toBigDecimal() = BigDecimal(this)
 

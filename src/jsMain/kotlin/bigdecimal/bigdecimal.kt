@@ -1,5 +1,7 @@
 package bigdecimal
 
+import mikhaylutsyury.kigdecimal.RoundingModes
+
 external interface BigDecimalModule {
 	fun BigInteger(text: String, radix: Int): BigInteger
 	fun BigDecimal(text: String): BigDecimal
@@ -8,12 +10,22 @@ external interface BigDecimalModule {
 	fun BigDecimal(value: Double): BigDecimal
 
 	val MathContext: MathContextStatic
+	val RoundingMode: RoundingModeStatic
 }
 
 val DECIMAL128 get() = bigdecimal.MathContext.DECIMAL128()
 val DECIMAL64 get() = bigdecimal.MathContext.DECIMAL64()
 val DECIMAL32 get() = bigdecimal.MathContext.DECIMAL32()
 val UNLIMITED get() = bigdecimal.MathContext.UNLIMITED()
+
+val UP get() = bigdecimal.RoundingMode.UP()
+val DOWN get() = bigdecimal.RoundingMode.DOWN()
+val CEILING get() = bigdecimal.RoundingMode.CEILING()
+val FLOOR get() = bigdecimal.RoundingMode.FLOOR()
+val HALF_UP get() = bigdecimal.RoundingMode.HALF_UP()
+val HALF_DOWN get() = bigdecimal.RoundingMode.HALF_DOWN()
+val HALF_EVEN get() = bigdecimal.RoundingMode.HALF_EVEN()
+val UNNECESSARY get() = bigdecimal.RoundingMode.UNNECESSARY()
 
 @Suppress("SpellCheckingInspection")
 val bigdecimal: BigDecimalModule by lazy { js("require(\"bigdecimal\")").unsafeCast<BigDecimalModule>() }
@@ -108,6 +120,7 @@ external class BigDecimal {
 	fun precision(): Int
 	fun unscaledValue(): BigInteger
 	fun setScale(newScale: Int): BigDecimal
+	fun setScale(newScale: Int, roundingMode: RoundingMode): BigDecimal
 	fun movePointLeft(n: Int): BigDecimal
 	fun movePointRight(n: Int): BigDecimal
 	fun scaleByPowerOfTen(n: Int): BigDecimal
@@ -144,4 +157,20 @@ external interface MathContextStatic {
 	val DECIMAL64: () -> MathContext
 	val DECIMAL32: () -> MathContext
 	val UNLIMITED: () -> MathContext
+}
+
+@JsModule("bigdecimal")
+@JsNonModule
+@JsName("RoundingMode")
+external enum class RoundingMode
+
+external interface RoundingModeStatic {
+	val UP: () -> RoundingMode
+	val DOWN: () -> RoundingMode
+	val CEILING: () -> RoundingMode
+	val FLOOR: () -> RoundingMode
+	val HALF_UP: () -> RoundingMode
+	val HALF_DOWN: () -> RoundingMode
+	val HALF_EVEN: () -> RoundingMode
+	val UNNECESSARY: () -> RoundingMode
 }
