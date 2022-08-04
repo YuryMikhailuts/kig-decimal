@@ -13,14 +13,13 @@ import mikhaylutsyury.kigdecimal.ext.BigDecimal
 @Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalSerializationApi::class)
 @Serializer(BigDecimal::class)
-object BigDecimalSerializer : KSerializer<BigDecimal> {
+open class BigDecimalFormatSerializer(val format: BigDecimalFormat) : KSerializer<BigDecimal> {
 	override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("BigDecimal", PrimitiveKind.STRING)
 
 	override fun deserialize(decoder: Decoder): BigDecimal = BigDecimal(decoder.decodeString())
 
 	override fun serialize(encoder: Encoder, value: BigDecimal) {
-		encoder.encodeString("$value")
+		encoder.encodeString(value.toString(format))
 	}
 
 }
-

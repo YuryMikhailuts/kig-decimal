@@ -31,20 +31,26 @@ open class PlainBigDecimalFormat(
 		val fraction = value.subtract(int.toBigDecimal())
 		var tmp = fraction.abs()
 		var fractionStr = ""
-		var count = 0U
-		while (true) {
-			tmp = tmp.multiply(10.toBigDecimal())
-			if (tmp.eq(0.toBigDecimal()) && !addZeroRight) break
-			val tmpInt = tmp.toBigInteger()
-			fractionStr += "$tmpInt"
-			count++
-			if (count >= fractionsCount) break
-			tmp = tmp.subtract(tmpInt.toBigDecimal())
+		if (fractionsCount > 0U) {
+			var count = 0U
+			while (true) {
+				tmp = tmp.multiply(10.toBigDecimal())
+				if (tmp.eq(0.toBigDecimal()) && !addZeroRight) break
+				val tmpInt = tmp.toBigInteger()
+				fractionStr += "$tmpInt"
+				count++
+				if (count >= fractionsCount) break
+				tmp = tmp.subtract(tmpInt.toBigDecimal())
+			}
 		}
-		var intStr = "${int.abs()}"
-		val leftZeroDiff = integersCount.toInt() - intStr.length
-		if (leftZeroDiff > 0 && addZeroLeft) intStr = "0".repeat(leftZeroDiff) + intStr
-		overflowErrorMessage?.also { msg -> require(leftZeroDiff < 0) { msg(value) } }
+		var intStr = ""
+		if (integersCount > 0U) {
+			intStr = "${int.abs()}"
+			val leftZeroDiff = integersCount.toInt() - intStr.length
+			if (leftZeroDiff > 0 && addZeroLeft) intStr = "0".repeat(leftZeroDiff) + intStr
+			overflowErrorMessage?.also { msg -> require(leftZeroDiff < 0) { msg(value) } }
+			if (leftZeroDiff < 0) intStr = intStr.substring(-leftZeroDiff)
+		}
 		val signStr = signToStr(value.signum())
 		result = "$signStr$intStr$decimalDot$fractionStr"
 		return result
