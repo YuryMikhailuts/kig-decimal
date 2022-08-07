@@ -17,5 +17,5 @@
 Для подключения библиотеки в gradle kotlin dsl нужно написать:
 
 ```kotlin
-implementation("com.github.YuryMikhailuts.kig-decimal:KigDecimal:1.2.2-SNAPSHOT")
+implementation("com.github.YuryMikhailuts.kig-decimal:KigDecimal:1.2.3-SNAPSHOT")
 ```
