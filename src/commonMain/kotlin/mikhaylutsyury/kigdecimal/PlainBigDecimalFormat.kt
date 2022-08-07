@@ -46,9 +46,10 @@ open class PlainBigDecimalFormat(
 		var intStr = ""
 		if (integersCount > 0U) {
 			intStr = "${int.abs()}"
+			// На сколько символов получившаяся строка меньше, чем максимальная ожидаемая.
 			val leftZeroDiff = integersCount.toInt() - intStr.length
 			if (leftZeroDiff > 0 && addZeroLeft) intStr = "0".repeat(leftZeroDiff) + intStr
-			overflowErrorMessage?.also { msg -> require(leftZeroDiff < 0) { msg(value) } }
+			overflowErrorMessage?.also { msg -> require(leftZeroDiff >= 0) { msg(value) } }
 			if (leftZeroDiff < 0) intStr = intStr.substring(-leftZeroDiff)
 		}
 		val signStr = signToStr(value.signum())

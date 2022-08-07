@@ -3,6 +3,8 @@ package mikhaylutsyury.kigdecimal
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 internal class PlainBigDecimalFormatTest {
 
@@ -19,4 +21,15 @@ internal class PlainBigDecimalFormatTest {
 		}
 	}
 
+
+	@Test
+	fun errorTest() {
+		val format = PlainBigDecimalFormat(3U, 2U) { "Value is BAD." }
+		val good = 999.99.toBigDecimal()
+		val bad = 1000.99.toBigDecimal()
+		kotlin.runCatching {
+			println("good = ${good.toString(format)}")
+		}.onFailure { assertTrue("Unexpected exception $it.") { false } }
+		assertFailsWith<IllegalArgumentException> { println("bad = ${bad.toString(format)}") }
+	}
 }
