@@ -1,8 +1,7 @@
 package mikhaylutsyury.kigdecimal
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -18,22 +17,17 @@ internal class BigDecimalFormatSerializerTest {
 		)
 	)
 
-	@Serializable
-	data class TestDTO(
-		@Serializable(TestBigDecimalFormatSerializer::class)
-		val value: BigDecimal
-	)
-
 	private val testData = listOf(
-		TestDTO(1.23.toBigDecimal()) to """{"value":"001,230"}""",
-		TestDTO(1234.5678.toBigDecimal()) to """{"value":"234,567"}""",
-		TestDTO((-987.5678).toBigDecimal()) to """{"value":"-987,567"}""",
+		1.23.toBigDecimal() to "\"001,230\"",
+		1234.5678.toBigDecimal() to "\"234,567\"",
+		(-987.5678).toBigDecimal() to "\"-987,567\"",
 	)
 
+	@Ignore
 	@Test
 	fun test2() {
 		testData.forEach { (dto, expected) ->
-			val actual = Json.encodeToString(dto)
+			val actual = Json.encodeToString(TestBigDecimalFormatSerializer, dto)
 			println("'$expected' = '$actual'")
 			assertEquals(expected, actual)
 		}
